@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from starlette.requests import Request
 from starlette.templating import Jinja2Templates #templete
 
+
+
 #fast api 
 app = FastAPI(
     title='Aiwass',
@@ -20,3 +22,7 @@ jinja_env = templates.env
 def index(request: Request):
     return templates.TemplateResponse('index.html',
                                       {'request': request} )
+    
+def get_train_date(request: Request):
+    return {'Hello': 'World'}
+    
