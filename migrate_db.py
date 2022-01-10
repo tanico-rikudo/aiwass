@@ -1,5 +1,5 @@
 import db
-from   db import Base
+from   app.db import Base,RDB_PATH,engine
 from  models import * 
 import  os,sys
 def create_table():
@@ -24,8 +24,11 @@ def create_table():
    print(task)
    db.session.add(task)
    db.session.commit()
-
    db.session.close()  
    
+def delete_all():
+   Base.metadata.drop_all(bind=engine)
+   
 if __name__ == "__main__":
-    create_table()
+   delete_all()
+   create_table()

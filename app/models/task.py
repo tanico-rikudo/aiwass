@@ -8,9 +8,6 @@ from sqlalchemy.dialects.mysql import INTEGER, BOOLEAN
 
 import hashlib
 
-SQLITE3_NAME = "./db.sqlite3"
-
-
 class Task(Base):
     """
     Learning model  
@@ -58,32 +55,3 @@ class Task(Base):
 
     def __str__(self):
         return f"{self.model_id} :{self.model_name}"
-
-
-class User(Base):
-    """
-    User table
-
-    id       : Primary
-    username : Username
-    password : pass word
-    mail     : mail address
-    """
-    __tablename__ = 'User'
-    id = Column(
-        'id',
-        INTEGER(unsigned=True),
-        primary_key=True,
-        autoincrement=True,
-    )
-    username = Column('username', String(256))
-    password = Column('password', String(256))
-    mail = Column('mail', String(256))  
- 
-    def __init__(self, username, password, mail):
-        self.username = username
-        self.password = hashlib.md5(password.encode()).hexdigest()
-        self.mail = mail
- 
-    def __str__(self):
-        return str(self.id) + ':' + self.username
