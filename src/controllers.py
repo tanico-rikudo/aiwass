@@ -23,6 +23,11 @@ def index(request: Request):
     return templates.TemplateResponse('index.html',
                                       {'request': request} )
     
+def admin(request: Request):
+    return templates.TemplateResponse('admin.html',
+                                      {'request': request,
+                                       'username': 'admin'})
+    
 def get_train_date(request: Request):
     return {'Hello': 'World'}
     
