@@ -2,13 +2,15 @@ import  os,sys
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from starlette.requests import Request
 
 """
 DB connector 
 """
  
 Base = declarative_base()
-RDB_PATH = 'sqlite:///db.sqlite3'
+# RDB_PATH = 'sqlite:///db.sqlite3'
+RDB_PATH = 'sqlite:///Users/macico/Dropbox/btc/aiwass/db.sqlite3'
 ECHO_LOG = True
  
 engine = create_engine(
@@ -17,6 +19,5 @@ engine = create_engine(
  
 Session = sessionmaker(bind=engine)
 
-async def get_db():
-    async with Session() as session:
-        yield session
+def get_db(request: Request):
+    return request.state.db

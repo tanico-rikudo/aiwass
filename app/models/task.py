@@ -1,10 +1,12 @@
+import os,sys
 from datetime import datetime as dt
-
-from db import Base
-
 from sqlalchemy import Column, String, DateTime, ForeignKey
 from sqlalchemy.sql.functions import current_timestamp
 from sqlalchemy.dialects.mysql import INTEGER, BOOLEAN
+
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(sys.path)
+from db.db import Base
 
 import hashlib
 

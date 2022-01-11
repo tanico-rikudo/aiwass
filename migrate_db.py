@@ -1,6 +1,8 @@
-import db
-from   app.db import Base,RDB_PATH,engine
-from  models import * 
+import db.db as db
+from  app.models import * 
+from  app.models.user import User
+from  app.models.task import Task
+
 import  os,sys
 def create_table():
 
@@ -8,12 +10,13 @@ def create_table():
    if not os.path.isfile(path):
 
       # テーブルを作成する
-      Base.metadata.create_all(db.engine)
+      db.Base.metadata.create_all(db.engine)
 
    # sample Uder
    admin = User(username='admin', password='test', mail='test@gmail.com')
-   db.session.add(admin) 
-   db.session.commit() 
+   session  = db.Session()
+   session.add(admin) 
+   session.commit() 
 
    # Sample task 
    task = Task(
@@ -22,12 +25,12 @@ def create_table():
       TRAIN_END_DATE="20200107",
    )
    print(task)
-   db.session.add(task)
-   db.session.commit()
-   db.session.close()  
+   session.add(task)
+   session.commit()
+   session.close()  
    
 def delete_all():
-   Base.metadata.drop_all(bind=engine)
+   db.Base.metadata.drop_all(bind=db.engine)
    
 if __name__ == "__main__":
    delete_all()

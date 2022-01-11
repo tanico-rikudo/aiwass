@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 
 
 class TaskBase(BaseModel):
-    model_id: str = Field(None, example="Test005")
+    model_id: str = Field(None, example="Test0055")
     model_name: str = Field(None, example="slstm")
     status: str = Field(None, example="registered")
 
@@ -25,7 +25,6 @@ class TaskCreateResponse(TaskCreate):
         TaskCreate ([type]): [description]
     """
     id: int
-
     class Config:
         orm_mode = True
 
