@@ -10,14 +10,16 @@ DB connector
  
 Base = declarative_base()
 # RDB_PATH = 'sqlite:///db.sqlite3'
-RDB_PATH = 'sqlite:///Users/macico/Dropbox/btc/aiwass/db.sqlite3'
+RDB_PATH = 'sqlite:////Users/macico/Dropbox/btc/aiwass/storage/db.sqlite3'
 ECHO_LOG = True
  
 engine = create_engine(
-   RDB_PATH, echo=ECHO_LOG
+   RDB_PATH, echo=ECHO_LOG,
+   connect_args={"check_same_thread": False}
+
 )
  
-Session = sessionmaker(bind=engine)
-
+# Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 def get_db(request: Request):
-    return request.state.db
+   return request.state.db

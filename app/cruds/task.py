@@ -1,59 +1,76 @@
 
 from typing import List, Tuple, Optional
 
-from sqlalchemy.ext.asyncio import AsyncSession
-
+from sqlalchemy import select
+from sqlalchemy.orm import Session, sessionmaker
 import app.models.task as task_model
 import app.schemas.task as task_schema
+from sqlalchemy.engine import Result
 
-async def get_tasks(db: AsyncSession) -> List[Tuple[int, str, str]]:
+def get_task(db:Session,task_id:int) -> task_model.Task:
     """ Lookup task by task_id
 
     Returns:
         task_model.Task
     """
-    result: Result = await (
+    result =  db.query(task_model.Task).filter(task_model.Task.id==task_id).first()
+    return result
+
+def get_tasks(db:Session) -> List[Tuple[int, str, str, str, str]]:
+    """ Lookup task by task_id
+
+    Returns:
+        task_model.Task
+    """
+    result=(
         db.execute(
             select(
                 task_model.Task.id,
                 task_model.Task.model_id,
-                task_model.Task.model_name
+                task_model.Task.model_name,
+                task_model.Task.train_start_date,
+                task_model.Task.train_end_date
             )
         )
     )
     return result.all()
 
-async def create_task(
-    db: AsyncSession, task_create: task_schema.TaskCreate
-        ) -> task_model.Task:
+def create_task(
+    db: Session, task_create: task_schema.TaskCreate
+        )  -> task_model.Task:
     """ Create task
     Returns: 
         task_model.Task
     """
     task = task_model.Task(**task_create.dict())
     db.add(task)
-    await db.commit()
-    await db.refresh(task)
+    db.commit()
+    db.refresh(task)
     return task
 
-async def update_task(
-    db: AsyncSession, task_create: task_schema.TaskCreate, original: task_model.Task
+def update_task(
+    db: Session, task_create: task_schema.TaskCreate, original: task_model.Task
         ) -> task_model.Task:    
     """ Create task
     Returns: 
         task_model.Task
     """
+    original.model_id = task_create.model_id
     original.model_name = task_create.model_name
+    original.train_start_date = task_create.train_start_date
+    original.train_end_date = task_create.train_end_date
+    
     db.add(original)
-    await db.commit()
-    await db.refresh(original)
+    db.commit()
+    db.refresh(original)
     return original
 
-async def delete_task(db: AsyncSession, original: task_model.Task) -> None:
+def delete_task(db: Session, original: task_model.Task) -> None:
     """ Delte task
     Args:
-        db (AsyncSession): [description]
+        db (Session): [description]
         original (task_model.Task): [description]
     """
-    await db.delete(original)
-    await db.commit()
+    print("dffffff~==========")
+    db.delete(original)
+    db.commit()

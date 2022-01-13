@@ -42,18 +42,16 @@ class Task(Base):
         self.model_name = model_name
 
         arg_keys = kwargs.keys()
-        print(arg_keys)
-        if ("TRAIN_START_DATE" in arg_keys)and("TRAIN_END_DATE" in arg_keys):
-            self.train_start_date =  kwargs["TRAIN_START_DATE"]
-            self.train_end_date =   kwargs["TRAIN_END_DATE"]
+        if ("train_start_date" in arg_keys)and("train_end_date" in arg_keys):
+            self.train_start_date =  kwargs["train_start_date"]
+            self.train_end_date =   kwargs["train_end_date"]
     
-        if ("VALID_START_DATE" in arg_keys)and("VALID_END_DATE" in arg_keys):
-            self.valid_start_date =   kwargs["VALID_START_DATE"]
-            self.valid_end_date =  kwargs["VALID_END_DATE"]
+        if ("valid_start_date" in arg_keys)and("valid_end_date" in arg_keys):
+            self.valid_start_date =   kwargs["valid_start_date"]
+            self.valid_end_date =  kwargs["valid_end_date"]
     
-        if ("TEST_START_DATE" in arg_keys)and("TEST_END_DATE" in arg_keys):
-            self.test_start_date =  kwargs["TEST_START_DATE"]
-            self.test_end_date = kwargs["TEST_END_DATE"]
-
+        if ("test_start_date" in arg_keys)and("test_end_date" in arg_keys):
+            self.test_start_date =  kwargs["test_start_date"]
+            self.test_end_date = kwargs["test_end_date"]
     def __str__(self):
-        return f"{self.model_id} :{self.model_name}"
+        return f"{self.model_id} :{self.model_name},{self.train_start_date} "
