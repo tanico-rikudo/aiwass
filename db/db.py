@@ -9,8 +9,8 @@ DB connector
 """
  
 Base = declarative_base()
-# RDB_PATH = 'sqlite:///db.sqlite3'
-RDB_PATH = 'sqlite:////Users/macico/Dropbox/btc/aiwass/storage/db.sqlite3'
+RDB_PATH = "sqlite:///db/db.sqlite3"
+
 ECHO_LOG = True
  
 engine = create_engine(
