@@ -2,6 +2,7 @@ import db.db as db
 from  app.models import * 
 from  app.models.user import User
 from  app.models.task import Task
+from fastapi import APIRouter, Depends
 
 import  os,sys
 def create_table():
@@ -14,15 +15,15 @@ def create_table():
 
    # sample Uder
    admin = User(username='admin', password='test', mail='test@gmail.com')
-   session  = db.Session()
+   session  = db.SessionLocal()
    session.add(admin) 
    session.commit() 
 
    # Sample task 
    task = Task(
       model_name="Test005",
-      TRAIN_START_DATE="20200101",
-      TRAIN_END_DATE="20200107",
+      train_start_date="20200101",
+      train_end_date="20200107"
    )
    print(task)
    session.add(task)
