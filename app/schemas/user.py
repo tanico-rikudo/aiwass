@@ -1,13 +1,12 @@
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, SecretStr
 
 
 class UserBase(BaseModel):
-    user_id: str = Field(None, example="1234567")
-    user_name: str = Field(None, example="shirotan")
+    username: str = Field(None, example="shirotan")
+    password: SecretStr
     mail: str = Field(None, example="shirotan@test.com")
-
 
 class UserCreate(UserBase):
     """ Request schema 
@@ -15,6 +14,7 @@ class UserCreate(UserBase):
     Args:
         UserBase ([type]): [description]
     """
+    password: str = Field(None, example="shirotanPW")
     pass
 
 
@@ -25,6 +25,7 @@ class UserCreateResponse(UserCreate):
         UserCreate ([type]): [description]
     """
     id: int
+
     class Config:
         orm_mode = True
 
@@ -36,8 +37,9 @@ class User(UserBase):
         UserBase ([type]): [description]
     """
     id: int
-    user_id: str = Field(None, example="Test005")
-    user_name: str = Field(None, example="slstm")
+    username: str = Field(None, example="shirotan")
+    password: SecretStr
+    mail: str = Field(None, example="shirotan@test.com")
 
     class Config:
         orm_mode = True

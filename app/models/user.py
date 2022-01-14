@@ -1,5 +1,5 @@
 from datetime import datetime as dt
-
+from sqlalchemy.schema import UniqueConstraint
 from sqlalchemy import Column, String, DateTime, ForeignKey
 from sqlalchemy.sql.functions import current_timestamp
 from sqlalchemy.dialects.mysql import INTEGER, BOOLEAN
@@ -18,6 +18,7 @@ class User(Base):
     MAILADDRESS     : mail address
     """
     __tablename__ = 'User'
+    __table_args__ = (UniqueConstraint("USERNAME", "MAILADDRESS", name="unique_idx_username_mail"),)
     id = Column(
         'id',
         INTEGER(unsigned=True),

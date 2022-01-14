@@ -1,50 +1,71 @@
 
 from typing import List, Tuple, Optional
+
 from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
 import app.models.user as user_model
 import app.schemas.user as user_schema
+from sqlalchemy.engine import Result
 
-async def get_user(db: Session, user_id: int) -> Optional[user_model.User]:
+def get_user(db:Session,user_id:int) -> user_model.User:
     """ Lookup user by user_id
 
     Returns:
         user_model.User
     """
-    result: Result = db.execute(
-        select(user_model.User).filter(user_model.User.id == user_id)
+    result =  db.query(user_model.User).filter(user_model.User.id==user_id).first()
+    return result
+
+def get_users(db:Session) -> List[Tuple[int, str, str, str, str]]:
+    """ Lookup user by user_id
+
+    Returns:
+        user_model.User
+    """
+    result=(
+        db.execute(
+            select(
+                user_model.User.id,
+                user_model.User.username,
+                user_model.User.password,
+                user_model.User.mail
+            )
+        )
     )
-    user: Optional[Tuple[user_model.User]] = result.first()
-    return user[0] if user is not None else None  # 要素が一つであってもtupleで返却されるので１つ目の要素を取り出す
+    return result.all()
 
-
-async def create_user(
+def create_user(
     db: Session, user_create: user_schema.UserCreate
-        ) -> user_model.User:
+        )  -> user_model.User:
     """ Create user
     Returns: 
         user_model.User
     """
+    print(user_create.dict())
     user = user_model.User(**user_create.dict())
+    print(user)
     db.add(user)
     db.commit()
     db.refresh(user)
     return user
 
-async def update_user(
+def update_user(
     db: Session, user_create: user_schema.UserCreate, original: user_model.User
         ) -> user_model.User:    
     """ Create user
     Returns: 
         user_model.User
     """
-    original.model_name = user_create.model_name
+    original.username = user_create.username
+    original.password = user_create.password
+    original.mail = user_create.mail
+    
     db.add(original)
     db.commit()
     db.refresh(original)
     return original
 
-async def delete_user(db: Session, original: user_model.User) -> None:
+def delete_user(db: Session, original: user_model.User) -> None:
     """ Delte user
     Args:
         db (Session): [description]
