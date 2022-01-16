@@ -4,7 +4,11 @@ from sqlalchemy.orm import Session, sessionmaker
 from db.db import SessionLocal
 from app.routers import task, user
 
-app = FastAPI()
+app = FastAPI(   
+    title='AiwassAPI',
+    description='Middle Commander',
+    version='0.9 beta(^v^)')
+
 app.include_router(task.router)
 app.include_router(user.router)
 
@@ -14,3 +18,4 @@ async def db_session_middleware(request: Request, call_next):
     response = await call_next(request)
     request.state.db.close()
     return response
+
