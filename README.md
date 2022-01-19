@@ -1,5 +1,5 @@
 # aiwass
-Admin and Commander for Suite of Misaka
+Commander for Cryptocurrency
 
  pip install sqlalchemy uvicorn
  chmod 777  storage -R
