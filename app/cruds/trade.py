@@ -88,3 +88,10 @@ def import_trade(db:Session, symbol:str, since_date:int, until_date:int):
         
         db.commit()
 
+def delete_trade(db: Session, date: int) -> None:
+    """ Delte Trade for daily bbatch
+    Args:
+        db (Session): [description]
+    """
+    db.query(trade_model.Trade).delete()
+    db.commit()

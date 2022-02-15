@@ -38,3 +38,9 @@ async def bulk_import_trades(db: Session = Depends(get_db), symbol:str = None, s
 async def create_trade(trade_body: trade_schema.TradeCreate, db:Session = Depends(get_db)):
     trade_body.event_datetime = dl.strYMDHMSF_to_dt(str(trade_body.event_datetime))
     return trade_crud.create_trade(db, trade_body)
+
+
+@router.delete("/trades/daily_reflesh", response_model=None)
+async def delete_trade_daily(db: Session = Depends(get_db)):
+    _ = trade_crud.delete_trade_daily(db)
+    return 
