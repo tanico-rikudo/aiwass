@@ -8,6 +8,7 @@ import app.schemas.trade as trade_schema
 from sqlalchemy.engine import Result
 from sqlalchemy.dialects import sqlite
 
+from mongodb.src.mongo_handler import MongoHandler
 
 from util.exceptions import *
 from util import daylib
@@ -17,7 +18,7 @@ dl = daylib.daylib()
 import logging
 
 def get_trades(db:Session, symbol:str, since_date:int, until_date:int) -> List[Tuple[int, str, str, str, str]]:
-    """ Lookup trade by id
+    """ Lookup trade by sym and date
 
     Returns:
         trade_model.Trade
@@ -59,4 +60,31 @@ def create_trade(
     db.commit()
     db.refresh(trade)
     return trade
+
+
+def import_trade(db:Session, symbol:str, since_date:int, until_date:int):
+    cm = ConfigManager(os.environ["KULOKO_INI"])
+    mongo_ini = cm.load_ini_config(path=None, config_name="mongo", mode=None)
+    
+    #TODO: set dynamic
+    mongo_config_mode = "DOCKER"
+    mongo_db = MongoHandler(mongo_ini[mongo_config_mode], self.item_type)
+    db_accesser = MongoUtil(mongo_db, logging)
+    
+    #TODO: Optimize. Fetch multiple days in only one time.
+    
+    ls_date = dl.get_between_date(since_date, until_date)
+    for int_date in ls_date:
+        return_data = db_accesser.find_at_date(table='trade',symbol=symbol, date = int_date)
+        db.bulk_save_objects(
+        [trade_model.Trade(
+            symbol=d["symbol"],
+                event_datetime=d["time"],
+                price=d["price"],
+                size = d["size"],
+                ask = d["ask"],
+                bid = d["bid"])
+        for d in return_data], return_defaults=True)
+        
+        db.commit()
 
