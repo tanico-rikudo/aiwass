@@ -4,3 +4,6 @@ SQLAlchemy==1.4.29
 starlette==0.17.1
 uvicorn==0.17.0
 pika==1.2.0
+jupyterlab==3.2.8
+joblib==1.1.0
+PyYAML==6.0

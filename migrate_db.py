@@ -2,9 +2,12 @@ import db.db as db
 from  app.models import * 
 from  app.models.user import User
 from  app.models.task import Task
+from  app.models.trade import Trade
+
 from fastapi import APIRouter, Depends
 
 import  os,sys
+from datetime import  datetime  as dt
 def create_table():
 
    path = db.RDB_PATH
@@ -24,6 +27,20 @@ def create_table():
       model_name="Test005",
       train_start_date="20200101",
       train_end_date="20200107"
+   )
+   print(task)
+   session.add(task)
+   session.commit()
+
+   # Sample task
+   sample_dt = dt.now()
+   task = Trade(
+      symbol="BTC",
+      event_datetime=sample_dt,
+      price="123",
+      size="321",
+      ask="120",   
+      bid="130",
    )
    print(task)
    session.add(task)

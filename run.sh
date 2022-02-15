@@ -38,8 +38,8 @@ else
 fi
 
 shift $((OPTIND - 1))
-source deactivate
-source activate py37
+# source deactivate
+# source activate py37
 python_interpritor=python
 execute_path=$AIWASS_DIR
 echo ${execute_path} 
