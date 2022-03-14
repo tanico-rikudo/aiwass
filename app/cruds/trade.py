@@ -1,4 +1,4 @@
-
+import os
 from typing import List, Tuple, Optional
 
 from sqlalchemy import select, func
@@ -8,7 +8,7 @@ import app.schemas.trade as trade_schema
 from sqlalchemy.engine import Result
 from sqlalchemy.dialects import sqlite
 
-from mongodb.src.mongo_handler import MongoHandler
+from mongodb.src.mongo_handler import *
 
 from util.exceptions import *
 from util import daylib

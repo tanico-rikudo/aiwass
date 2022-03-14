@@ -29,7 +29,7 @@ class Trade(Base):
     price = Column('PRICE', FLOAT(256), nullable=False)
     size = Column('SIZE', FLOAT(256), nullable=False)
     ask = Column('ASK', FLOAT(256), nullable=False)
-    bid = Column('BIS', FLOAT(256), nullable=False)
+    bid = Column('BID', FLOAT(256), nullable=False)
     
     flag01 = Column('FLAG01', String(256),nullable=True)
     flag02 = Column('FLAG02', String(256),nullable=True)
