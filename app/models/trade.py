@@ -15,35 +15,23 @@ class Trade(Base):
     Learning model  
 
     ID       : Primary 
-    EVENT_DATETIME: datetime
+    TIME: datetime
     SYMBOL  : symbol (unique)
     PRICE:  price
-    FLAG01 : option value
-    FLAG02 : option value
-    FLAG03 : option value
     """
     __tablename__ = 'Trade'
     id = Column( 'id',INTEGER(unsigned=True), primary_key=True, autoincrement=True)
-    event_datetime = Column('EVENT_DATETIME', DATETIME,nullable=False)
+    time = Column('TIME', DATETIME,nullable=False)
     symbol = Column('SYMBOL', String(256),nullable=False)
     price = Column('PRICE', FLOAT(256), nullable=False)
     size = Column('SIZE', FLOAT(256), nullable=False)
-    ask = Column('ASK', FLOAT(256), nullable=False)
-    bid = Column('BID', FLOAT(256), nullable=False)
-    
-    flag01 = Column('FLAG01', String(256),nullable=True)
-    flag02 = Column('FLAG02', String(256),nullable=True)
-    flag03 = Column('FLAG03', String(256),nullable=True)
     
 
-    def __init__(self, symbol, event_datetime,  price, size, ask, bid, **kwargs):
+    def __init__(self, symbol, time,  price, size, ask, bid, **kwargs):
         self.symbol = symbol
-        self.event_datetime = event_datetime
+        self.time = time
         self.price = price
         self.size = size
-        self.ask = ask
-        self.bid = bid
     
-
     def __str__(self):
-        return f"{self.id} :{self.symbol}  --> {self.size}@{self.price}. ( ask:{self.ask}) - bid:{self.bid}"
+        return f"{self.id} :{self.symbol}  --> {self.size}@{self.price}."

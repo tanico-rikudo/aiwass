@@ -24,23 +24,12 @@ async def list_trades(db: Session = Depends(get_db), symbol:str = None, since_da
         until_date = since_date
     return trade_crud.get_trades(db, symbol, since_date, until_date)
 
-@router.get("/trades/bulk",response_model=List[trade_schema.TradeResponseBase])
-async def bulk_import_trades(db: Session = Depends(get_db), symbol:str = None, since_date:int = None, until_date:int = None):
+@router.get("/ohlcv",response_model=List[trade_schema.OhlcvResponseBase])
+async def list_ohlcv(db: Session = Depends(get_db), symbol:str = None, since_date:int = None, until_date:int = None):
     if symbol is None:
          raise HTTPException(status_code=404, detail="Symbol must be set")
     if since_date is None:
          raise HTTPException(status_code=404, detail="since_date must be set")
     if until_date is None: 
         until_date = since_date
-    return trade_crud.import_trade(db, symbol, since_date, until_date)
-
-@router.post("/trades", response_model=trade_schema.TradeCreateResponse)
-async def create_trade(trade_body: trade_schema.TradeCreate, db:Session = Depends(get_db)):
-    trade_body.event_datetime = dl.strYMDHMSF_to_dt(str(trade_body.event_datetime))
-    return trade_crud.create_trade(db, trade_body)
-
-
-@router.delete("/trades/daily_reflesh", response_model=None)
-async def delete_trade_daily(db: Session = Depends(get_db)):
-    _ = trade_crud.delete_trade_daily(db)
-    return 
+    return trade_crud.get_ohlcv(db, symbol, since_date, until_date)

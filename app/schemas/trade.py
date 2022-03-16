@@ -5,33 +5,21 @@ from datetime import datetime
 
 class TradeBase(BaseModel):
     symbol: str = Field(None, example="BTC")
-    event_datetime: int = Field(None, example="20220215114733760925")
+    time: int = Field(None, example="20220215114733760925")
     price: float = Field(None, example="1342645.0")
     size: float = Field(None, example="100")
-    ask: float = Field(None, example="1342644.5")
-    bid: float = Field(None, example="1342646.5")
     price: float = Field(None, example="20200101")
     
 class TradeResponseBase(TradeBase):
-    event_datetime: datetime
+    time: datetime
     
-class TradeCreate(TradeBase):
-    """ Request schema 
+class OhlcvResponseBase(BaseModel):
+    symbol: str = Field(None, example="BTC")
+    time: str = Field(None, example="20220215114733760925")
+    open: float = Field(None, example="1342645.0")
+    high: float = Field(None, example="1342645.0")
+    low: float = Field(None, example="1342645.0")
+    close: float = Field(None, example="1342645.0")
+    size: float = Field(None, example="1342645.0")
 
-    Args:
-        TradeBase ([type]): [description]
-    """
-    pass
-
-
-class TradeCreateResponse(TradeCreate):
-    """ Create  response schema
-
-    Args:
-        UserCreate ([type]): [description]
-    """
-    id: int
-    event_datetime: datetime
-
-    class Config:
-        orm_mode = True
+    
