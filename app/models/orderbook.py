@@ -15,7 +15,7 @@ class OrderBook(Base):
     Learning model  
 
     ID       : Primary 
-    EVENT_DATETIME: datetime
+    TIME: datetime
     SYMBOL  : symbol (unique)
     PRICE:  price
     FLAG01 : option value
