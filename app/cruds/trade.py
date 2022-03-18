@@ -34,8 +34,8 @@ def get_trades(db:Session, symbol:str, since_date:int, until_date:int) -> List[T
     
     #TODO: set dynamic
     mongo_config_mode = "DOCKER"
-    mongo_db = MongoHandler(mongo_ini[mongo_config_mode], 'trade')
-    db_accesser = MongoUtil(mongo_db, logging)
+    mongodb = MongoHandler(mongo_ini[mongo_config_mode], 'trade')
+    db_accesser = MongoUtil(mongodb, logging)
     
     ls_date = dl.get_between_date(since_date, until_date)
 

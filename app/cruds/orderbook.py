@@ -31,8 +31,8 @@ def get_orderbook(db:Session, symbol:str, since_date:int, until_date:int) -> Lis
     
     #TODO: set dynamic
     mongo_config_mode = "DOCKER"
-    mongo_db = MongoHandler(mongo_ini[mongo_config_mode], 'orderbook')
-    db_accesser = MongoUtil(mongo_db, logging)
+    mongodb = MongoHandler(mongo_ini[mongo_config_mode], 'orderbook')
+    db_accesser = MongoUtil(mongodb, logging)
     
     ls_date = dl.get_between_date(since_date, until_date)
 
