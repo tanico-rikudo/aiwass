@@ -17,6 +17,7 @@ services:
     networks:
       shared-nw:
         ipv4_address: 172.30.0.65
+    restart: always
 
 networks:
   default:
