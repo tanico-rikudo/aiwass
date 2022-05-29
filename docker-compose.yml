@@ -1,0 +1,28 @@
+version: '3'
+services:
+  aiwass_web:
+    container_name: aiwass_web
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - ${HOST_BASE_DIR}/geco_commons:/root/src/geco_commons
+      - ${HOST_BASE_DIR}/aiwass:/root/src/aiwass
+    command: ./aiwass/run.sh
+    expose:
+      - 3018
+    ports:
+      - 3018:3018
+    env_file: .env
+    tty: true
+    networks:
+      shared-nw:
+        ipv4_address: 172.30.0.65
+    restart: always
+
+networks:
+  default:
+    external:
+      name: bridge
+  # Connection  among conntianers
+  shared-nw:
+    external: true

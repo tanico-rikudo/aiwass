@@ -27,7 +27,6 @@ class TaskCreateResponse(TaskCreate):
         TaskCreate ([type]): [description]
     """
     id: int
-
     class Config:
         orm_mode = True
 
